@@ -1,3 +1,5 @@
+This is the HatchWays Practice Example. I completed it to the best of my abilities, but I could not figure out the font they chose.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

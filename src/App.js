@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import WeatherContainer from './WeatherContainer.js';
+import React, { Component } from 'react';
+class App extends Component {
+  state = {
+    weatherData: [],
+    requesting: false
+  } 
 
-function App() {
+  componentDidMount() {
+    if (!this.state.requesting)
+      this.setState({requesting: true})
+      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=42.93&lon=-78.72&exclude=minutely,hourly&appid=${process.env.REACT_APP_WEATHER_MAP_API_KEY}`)
+    .then(resp => resp.json()).then(json => this.updateWeather(json))
+  }
+
+  updateWeather = json => {
+    console.log(json)
+    this.setState({weatherData: json.daily.slice(0, 5), requesting: false})
+  }
+
+  render (){
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div>
+          <WeatherContainer weatherData={this.state.weatherData}/>
+        </div>
+      
     </div>
-  );
+  );}
 }
 
 export default App;
